@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -1360,8 +1361,9 @@ void print_bits() {
 		if (inst[text->idx].type == 'R') {
 			/* blank */
 			if (text->idx == 8) {
+				printf("%s", text->s);
 				printf("00000");
-				printf("%s", text->t);
+				
 				printf("00000");
 				printf("00000");
 				printf("%s", inst[text->idx].funct);
@@ -1420,52 +1422,58 @@ void print_bits() {
 		}
 	
 	}
+	if (datasize != 0) {
+		for (sym = Symbols; sym != NULL; sym = sym->next) {
+			/* blank */
+			 //blank
+			char* str;
+			int data_temp = -4;
+			struct Data* will_print_data;
+			will_print_data = sym->first;
 
-	for (sym = Symbols; sym != NULL; sym = sym->next) {
-		/* blank */
-		 //blank
-		char* str;
-		struct Data* will_print_data;
-		will_print_data = sym->first;
+			fprintf(stderr, "\sym->first :: %u  sym->last :: %u \n", (sym->first), (sym->last));
+			fprintf(stderr, "\sym->first :: %d  break :: %d \n", (sym->address), (0x10000000 + datasize - 4));
 
-		//fprintf(stderr, "\sym->first :: %u  sym->last :: %u \n", (sym->first), (sym->last));
-
-		while (1) {
-			printf("%s", num_to_bits(will_print_data->value, 32));
-			
+			while (1) {
+				printf("%s", num_to_bits(will_print_data->value, 32));
 
 
-			
-			
-			if (sym->last == will_print_data) {
-				//fprintf(stderr, "\n  bbbbbbbbbbbbbbrrrrrrrrrrrrrrrrrr \n");
+				fprintf(stderr, "\sym->last->value :: %d   will_print_data->value :: %d \n", (sym->last->value), will_print_data->value);
+				data_temp += 4;
+
+				fprintf(stderr, "\n  data_temp :: %d \n", data_temp);
+
+				if (sym->last == will_print_data) {
+					fprintf(stderr, "\n  bbbbbbbbbbbbbbrrrrrrrrrrrrrrrrrr \n");
+					break;
+				}
+				else {
+
+					will_print_data = will_print_data->next;
+					continue;
+				}
+			}
+			if (sym->address + data_temp == (0x10000000 + datasize - 4)) {
+
+				fprintf(stderr, "\n  bbrrr \n");
+
 				break;
 			}
-			else {
-				
-				will_print_data = will_print_data->next;
-				continue;
+
+
+
+
+
+			/*
+			data = (struct Data*)malloc(sizeof(struct Data));
+			for (data = sym->first; data != NULL; data = data->next) {
+				str = num_to_bits(data->value, 32);
+				//printf("");
+				printf("%s", str);
 			}
+			*/
+
 		}
-
-
-
-		if (sym->address == (0x10000000 + datasize-4)) {
-
-
-			break;
-		}
-
-
-		/*
-		data = (struct Data*)malloc(sizeof(struct Data));
-		for (data = sym->first; data != NULL; data = data->next) {
-			str = num_to_bits(data->value, 32);
-			//printf("");
-			printf("%s", str);
-		}
-		*/
-
 	}
 	printf("\n"); // To exclude "No newline at end of file"
 }
