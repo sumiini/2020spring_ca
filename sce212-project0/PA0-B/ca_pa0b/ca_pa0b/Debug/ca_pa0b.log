@@ -1,0 +1,7 @@
+﻿  dir_file.c
+c:\users\hong sumin\desktop\2020컴구\sce212-project0\pa0-b\dir_file.c(1): fatal error C1083: 포함 파일을 열 수 없습니다. 'utils.h': No such file or directory
+  main.c
+c:\users\hong sumin\desktop\2020컴구\sce212-project0\pa0-b\main.c(1): fatal error C1083: 포함 파일을 열 수 없습니다. 'utils.h': No such file or directory
+  utils.c
+c:\users\hong sumin\desktop\2020컴구\sce212-project0\pa0-b\utils.c(1): fatal error C1083: 포함 파일을 열 수 없습니다. 'dir_file.h': No such file or directory
+  코드를 생성하고 있습니다...
